@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>宣传工作委员会</title>
+    <link type="text/css" href="static/bootstrap/css/bootstrap-v2.css" rel="stylesheet">
+    <link type="text/css" href="static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link type="text/css" href="static/css/theme.css" rel="stylesheet">
+    <script src="static/script/jquery-3.3.1.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/script/bootstrap-datetimepicker.js"></script>
+    <script src="static/script/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script src="static/script/vue.js"></script>
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <p>这是测试版网站,网站功能还未齐全,如果您遇到了BUG,请向开发者反馈：<a href="mailTo:lsz0929@live.cn">lsz0929@live.cn</a></p>
+        <p class="pull-right">v0.6.6 beta</p>
+        <br/>
+    </div>
+</div>
+<div class="container" id="lsz">
+    <img src="static/img/logo.png" style="height: 200px; width: 200px">
+    <div class="row span9">
+        <div class="content">
+            <div class="module">
+                <div class="module-head">
+                    <h3>提交宣传申请</h3>
+                </div>
+                <div class="module-body">
+
+                    <form class="form-horizontal row-fluid" action="apply"
+                          method="post">
+                        <input type="hidden" name="action" value="add"/>
+                        <div class="control-group">
+                            <label class="control-label">活动名称：</label>
+                            <div class="controls">
+                                <input type="text" name="name" placeholder="例：班级研讨会" class="span8" required/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">申请单位：</label>
+                            <div class="controls">
+                                <input type="text" name="unit" placeholder="例：学生会办公室" class="span8" required/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">联系方式：</label>
+                            <div class="controls">
+                                <input type="text" name="contact" placeholder="例：陈彦亨（640436）" class="span8" required/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">申请部门：</label>
+                            <div class="controls">
+                                <label v-for="dept of deptList" class="checkbox inline">
+                                    <input type="checkbox" name="depts" :value="dept.id"/>
+                                    {{dept.name}}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group date">
+                            <label class="control-label">活动时间：</label>
+                            <div class="controls">
+                                <input type="text" name="exec" id="date" required/>
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">活动地点：</label>
+                            <div class="controls">
+                                <input type="text" name="place" placeholder="例：教三-605" class="span8" required/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">活动简介：</label>
+                            <div class="controls">
+                                <textarea class="span8" name="description" rows="5" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" required/>
+                                    我已经阅读并了解<a href="role.html">宣委申请制度</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-success">提交申请</button>&nbsp;&nbsp;
+                                <button type="reset" class="btn btn-primary">清空表格</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!--/.content-->
+    </div>
+</div><!--/.container-->
+<div class="footer">
+    <div class="container">
+        <a href="login.html">管理员登录</a>
+    </div>
+</div>
+
+<script>
+    var vue = new Vue({
+        el: "#lsz",
+        data: {
+            deptList: ""
+        },
+        mounted:function () {
+            $.post("dept", null, function (data) {
+                vue.deptList = data;
+            }, "JSON");
+        }
+    });
+    $('#date').datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',
+        timePicker: false,
+        startDate: new Date(),
+        yearEnd: 2030,
+        todayButton: true,
+        autoclose: true
+    });
+</script>
+</body>
+</html>

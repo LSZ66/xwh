@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="xwh.war">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="xwh.war.war">
+      <element id="artifact" artifact-name="xwh:war exploded" />
+    </root>
+  </artifact>
+</component>
